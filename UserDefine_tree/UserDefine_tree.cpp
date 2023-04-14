@@ -132,12 +132,32 @@ void buildFromLevelOrder(node* &root) //Making The Tree as Node
     }
 }
 
+void inOrderLNRforCount(node* root,int &count) //In Order Traversal..
+{
+    if (root == NULL)
+        return;
+    inOrderLNRforCount(root->left,count);
+    if (root->left == NULL && root->right == NULL)
+    {
+        count++;
+    }
+    inOrderLNRforCount(root->right,count);
+}
+
+int noOfLeafNodes(node* root)
+{
+    int count = 0;
+    inOrderLNRforCount(root, count);
+    return count;
+}
+
 
 int main()
 {
     node* root = NULL;
     buildFromLevelOrder(root);
     levelOrderTraversal(root);
+    cout << endl << "No of leaf nodes: " << noOfLeafNodes(root);
     
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1..
     /*
