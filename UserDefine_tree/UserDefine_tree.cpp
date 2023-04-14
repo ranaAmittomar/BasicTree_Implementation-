@@ -151,7 +151,7 @@ int noOfLeafNodes(node* root)
     return count;
 }
 
-int height(node* root) //HEIGHT OF THE TREE -> BASIC IMPORTANT QUESTION..
+int height(node* root) //HEIGHT OF THE TREE -> BASIC IMPORTANT QUESTION.. Time Complexity[O(n^2)]
 {
     if (root == NULL)
         return 0;
@@ -162,6 +162,43 @@ int height(node* root) //HEIGHT OF THE TREE -> BASIC IMPORTANT QUESTION..
     return ans;
 }
 
+pair<int, int> diameterOptimised(node* root) //Optimised Approach to find the Diameter of the tree. Time Complexity [O(n)]..
+{
+    if (root == NULL)
+    {
+        pair<int, int> p = make_pair(0, 0);
+        return p;
+    }
+
+    pair<int, int> left = diameterOptimised(root->left);
+    pair<int, int>right = diameterOptimised(root->right);
+    int opt1 = left.first;
+    int opt2 = right.first;
+    int opt3 = left.second + right.second +1;
+
+    pair<int, int> ans;
+    ans.first = max(opt1, max(opt2, opt3));
+    ans.second = max(left.second, right.second) + 1;
+    return ans;
+
+}
+int diameterOptiCall(node* root)
+{
+    return diameterOptimised(root).first;
+}
+
+
+int diameterOfTree(node* root)
+{
+    if (root == NULL)
+        return 0;
+    int opt1 = diameterOfTree(root->left);
+    int opt2 = diameterOfTree(root->right);
+    int opt3 = height(root->left) + height(root->right) + 1;
+    int ans = max(opt1, max(opt2, opt3));
+    return ans;
+}
+
 int main()
 {
     node* root = NULL;
@@ -169,6 +206,8 @@ int main()
     levelOrderTraversal(root);
     cout << endl << "No of leaf nodes: " << noOfLeafNodes(root);
     cout << endl <<"Height of the Tree : " << height(root);
+    cout << endl << "Diamete of the Tree : " << diameterOfTree(root);
+    cout << endl << "Diameter of Tree Optimised: " << diameterOptiCall(root);
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1..
     /*
     root = buildTree(root);
