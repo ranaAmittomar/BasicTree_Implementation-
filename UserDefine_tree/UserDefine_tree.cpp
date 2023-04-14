@@ -151,6 +151,16 @@ int noOfLeafNodes(node* root)
     return count;
 }
 
+int height(node* root) //HEIGHT OF THE TREE -> BASIC IMPORTANT QUESTION..
+{
+    if (root == NULL)
+        return 0;
+    int left = height(root->left);
+    int right = height(root->right);
+
+    int ans = max(left, right) + 1;
+    return ans;
+}
 
 int main()
 {
@@ -158,7 +168,7 @@ int main()
     buildFromLevelOrder(root);
     levelOrderTraversal(root);
     cout << endl << "No of leaf nodes: " << noOfLeafNodes(root);
-    
+    cout << endl <<"Height of the Tree : " << height(root);
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1..
     /*
     root = buildTree(root);
@@ -176,6 +186,5 @@ int main()
     return 0;
     
     */
-   
 }
 
