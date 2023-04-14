@@ -199,6 +199,52 @@ int diameterOfTree(node* root)
     return ans;
 }
 
+bool isBalancedTree(node* root) //CHECK IF THE BINARY TREE IS BALANCED OR NOT.. Time Complexity [O(n^2)]
+{
+    if (root == NULL)
+        return true;
+    bool left = isBalancedTree(root->left);
+    bool right = isBalancedTree(root->right);
+
+    bool diff = abs(height(root->left) - height(root->right)) <= 1;
+    if (left && right && diff) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+pair<bool, int> isBalancedOptimised(node* root) // CHECK IF THE BINARY TREE IS BALANCED OR NOT..Time Complexity[O(n)]
+{
+    if (root == NULL)
+    {
+        pair<bool, int> p = make_pair(true, 0);
+        return p;
+    }
+    pair<bool, int>left = isBalancedOptimised(root->left);
+    pair<bool, int>right = isBalancedOptimised(root->right);
+
+    bool leftAns = left.first; 
+    bool rightAns = right.first;
+    bool diff = abs(height(root->left) - height(root->right)) <= 1;
+    pair<bool, int> ans;
+    ans.second = max(left.second, right.second) + 1;
+    if (leftAns && rightAns && diff) {
+        ans.first = true;
+    }
+    else {
+        ans.first = false;
+    }
+    return ans;
+}
+
+bool isBlancedOtiCall(node* root)
+{
+    return isBalancedOptimised(root).first;
+}
+
+
 int main()
 {
     node* root = NULL;
@@ -208,6 +254,9 @@ int main()
     cout << endl <<"Height of the Tree : " << height(root);
     cout << endl << "Diamete of the Tree : " << diameterOfTree(root);
     cout << endl << "Diameter of Tree Optimised: " << diameterOptiCall(root);
+    cout << endl << "Is th tree Balanced: " << isBalancedTree(root);
+    cout << endl << "Is th tree Balanced Optimised: " << isBlancedOtiCall(root);
+
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1..
     /*
     root = buildTree(root);
