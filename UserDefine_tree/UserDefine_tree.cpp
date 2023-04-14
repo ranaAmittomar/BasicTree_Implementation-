@@ -100,15 +100,52 @@ void postOrderLNR(node* root) //Post Order Traversal
     cout << root->data << " ";
 }
 
+void buildFromLevelOrder(node* &root) //Making The Tree as Node 
+{
+    queue<node*> q;
+    cout << "Enter data for root: " << endl;
+    int data;
+    cin >> data;
+    root = new node(data);
+    q.push(root);
+    while (!q.empty())
+    {
+        node* temp = q.front();
+        q.pop();
+
+        cout << "Enter left Node for : " << temp->data << endl;
+        int leftData;
+        cin >> leftData;
+        if (leftData != -1)
+        {
+            temp->left = new node(leftData);
+            q.push(temp->left);
+        }
+        cout << "Enter right Node for : " << temp->data << endl;
+        int rightData;
+        cin >> rightData;
+        if (rightData != -1)
+        {
+            temp->right = new node(rightData);
+            q.push(temp->right);
+        }
+    }
+}
+
 
 int main()
 {
     node* root = NULL;
-    root = buildTree(root);
+    buildFromLevelOrder(root);
     levelOrderTraversal(root);
-    cout << endl;
+    
     // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1..
-    cout << "In order traversal: ";
+    /*
+    root = buildTree(root);
+    *
+    * levelOrderTraversal(root);
+    cout << endl;
+     cout << "In order traversal: ";
     inOrderLNR(root);
     cout << endl;
     cout << " Pre Order Traversal: ";
@@ -117,5 +154,8 @@ int main()
     cout << "Post Order Traversal: ";
     postOrderLNR(root);
     return 0;
+    
+    */
+   
 }
 
